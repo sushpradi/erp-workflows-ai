@@ -1,0 +1,32 @@
+[
+  {
+    "vendor": "HP India Pvt Ltd",
+    "avg_delivery_delay_days": 6.5,
+    "invoice_exception_rate_percent": 28
+  },
+  {
+    "vendor": "Dell India Pvt Ltd",
+    "avg_delivery_delay_days": 3.2,
+    "invoice_exception_rate_percent": 12
+  },
+  {
+    "vendor": "Lenovo India Pvt Ltd",
+    "avg_delivery_delay_days": 2.4,
+    "invoice_exception_rate_percent": 6
+  },
+  {
+    "vendor": "OfficeWorks Interiors",
+    "avg_delivery_delay_days": 5.3,
+    "invoice_exception_rate_percent": 14
+  },
+  {
+    "vendor": "CloudSphere",
+    "avg_delivery_delay_days": 1.2,
+    "invoice_exception_rate_percent": 9
+  },
+  {
+    "vendor": "SafePro Industrial",
+    "avg_delivery_delay_days": 4.9,
+    "invoice_exception_rate_percent": 11
+  }
+]

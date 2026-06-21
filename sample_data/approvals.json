@@ -1,0 +1,34 @@
+[
+  {
+    "request_id": "PR-1002",
+    "amount": 220000,
+    "required_approvals": ["Department Manager", "Finance Manager"],
+    "actual_approvals": ["Department Manager"],
+    "policy_violation": false,
+    "risk": "Travel request paused"
+  },
+  {
+    "request_id": "PR-1005",
+    "amount": 540000,
+    "required_approvals": ["Department Manager", "Finance Manager", "CFO"],
+    "actual_approvals": ["Department Manager", "Finance Manager"],
+    "policy_violation": true,
+    "risk": "High-value spend without CFO sign-off"
+  },
+  {
+    "request_id": "PR-1006",
+    "amount": 880000,
+    "required_approvals": ["Department Manager", "Finance Manager", "CFO"],
+    "actual_approvals": ["Department Manager", "Finance Manager"],
+    "policy_violation": true,
+    "risk": "Blocked high-value hardware order"
+  },
+  {
+    "request_id": "PR-1009",
+    "amount": 640000,
+    "required_approvals": ["Department Manager", "Finance Manager", "CFO"],
+    "actual_approvals": ["Department Manager"],
+    "policy_violation": true,
+    "risk": "CFO and finance approval missing"
+  }
+]

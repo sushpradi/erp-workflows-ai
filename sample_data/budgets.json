@@ -1,0 +1,42 @@
+[
+  {
+    "department": "IT",
+    "quarter": "Q2-2026",
+    "budget": 1000000,
+    "actual_spend": 840000,
+    "pending_commitments": 320000,
+    "drivers": ["Laptop refresh", "Software renewals"]
+  },
+  {
+    "department": "Facilities",
+    "quarter": "Q2-2026",
+    "budget": 900000,
+    "actual_spend": 610000,
+    "pending_commitments": 390000,
+    "drivers": ["Safety equipment", "Scanner replacements"]
+  },
+  {
+    "department": "Sales",
+    "quarter": "Q2-2026",
+    "budget": 1100000,
+    "actual_spend": 760000,
+    "pending_commitments": 410000,
+    "drivers": ["CRM renewal", "Travel"]
+  },
+  {
+    "department": "Admin",
+    "quarter": "Q2-2026",
+    "budget": 500000,
+    "actual_spend": 300000,
+    "pending_commitments": 120000,
+    "drivers": ["Office supplies"]
+  },
+  {
+    "department": "Engineering",
+    "quarter": "Q2-2026",
+    "budget": 1500000,
+    "actual_spend": 1080000,
+    "pending_commitments": 620000,
+    "drivers": ["Cloud credits", "Workstations"]
+  }
+]

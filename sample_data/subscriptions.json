@@ -1,0 +1,20 @@
+[
+  {
+    "product": "Jira",
+    "licenses": 100,
+    "used": 80,
+    "annual_cost": 240000
+  },
+  {
+    "product": "Figma",
+    "licenses": 40,
+    "used": 26,
+    "annual_cost": 180000
+  },
+  {
+    "product": "Zoom",
+    "licenses": 120,
+    "used": 118,
+    "annual_cost": 144000
+  }
+]

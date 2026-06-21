@@ -1,0 +1,37 @@
+[
+  {
+    "payment_id": "PAY-1001",
+    "request_id": "PR-1001",
+    "due_date": "2026-06-24",
+    "payment_amount": 613600,
+    "payment_status": "PENDING"
+  },
+  {
+    "payment_id": "PAY-1004",
+    "request_id": "PR-1004",
+    "due_date": "2026-06-19",
+    "payment_amount": 310000,
+    "payment_status": "OVERDUE"
+  },
+  {
+    "payment_id": "PAY-1006",
+    "request_id": "PR-1006",
+    "due_date": "2026-06-29",
+    "payment_amount": 880000,
+    "payment_status": "PENDING"
+  },
+  {
+    "payment_id": "PAY-1008",
+    "request_id": "PR-1008",
+    "due_date": "2026-05-11",
+    "payment_amount": 395000,
+    "payment_status": "PAID"
+  },
+  {
+    "payment_id": "PAY-1009",
+    "request_id": "PR-1009",
+    "due_date": "2026-07-05",
+    "payment_amount": 640000,
+    "payment_status": "PENDING"
+  }
+]

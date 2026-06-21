@@ -37,6 +37,8 @@ def test_vendor_ranking_prefers_high_delay_and_exception_rate() -> None:
 def test_profitability_changes_reflect_revenue_and_payroll() -> None:
     data = reload_all_data()
     analysis = tools.analyze_profitability(data, "Q2-2026")
+    assert analysis["current_profit"] == -516600
+    assert analysis["previous_profit"] == 2622000
     assert analysis["revenue_change"] < 0
     assert analysis["payroll_change"] > 0
     assert analysis["profit_delta"] < 0

@@ -159,6 +159,8 @@ def render_rule_based_answer(question: str, tool_result: ToolResult) -> str:
         answer = f"Profit declined by {_format_currency(abs(facts['profit_delta']))} versus the previous quarter."
         data_used = "\n".join(
             [
+                f"- {facts['current_quarter']} profit = {_format_currency(facts['current_revenue'])} - {_format_currency(facts['current_payroll'])} - {_format_currency(facts['current_purchase_spend'])} = {_format_currency(facts['current_profit'])}",
+                f"- {facts['previous_quarter']} profit = {_format_currency(facts['previous_revenue'])} - {_format_currency(facts['previous_payroll'])} - {_format_currency(facts['previous_purchase_spend'])} = {_format_currency(facts['previous_profit'])}",
                 f"- Revenue change: {_format_currency(facts['revenue_change'])}",
                 f"- Payroll change: {_format_currency(facts['payroll_change'])}",
                 f"- Purchase spend change: {_format_currency(facts['purchase_spend_change'])}",

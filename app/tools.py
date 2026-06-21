@@ -262,6 +262,12 @@ def analyze_profitability(data: dict[str, Any], current_quarter: str | None = No
     return {
         "current_quarter": current_quarter,
         "previous_quarter": previous_quarter,
+        "current_revenue": revenue_map[current_quarter],
+        "previous_revenue": revenue_map[previous_quarter],
+        "current_payroll": payroll_map[current_quarter],
+        "previous_payroll": payroll_map[previous_quarter],
+        "current_purchase_spend": purchase_by_quarter[current_quarter],
+        "previous_purchase_spend": purchase_by_quarter[previous_quarter],
         "revenue_change": revenue_map[current_quarter] - revenue_map[previous_quarter],
         "payroll_change": payroll_map[current_quarter] - payroll_map[previous_quarter],
         "purchase_spend_change": purchase_by_quarter[current_quarter] - purchase_by_quarter[previous_quarter],

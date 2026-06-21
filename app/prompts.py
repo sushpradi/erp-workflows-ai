@@ -13,6 +13,7 @@ Rules:
 - Always answer in exactly two sections with these headings:
 1. Answer
 2. Data Used
+- When the facts include formulas or current-versus-previous values, show the arithmetic explicitly in Data Used.
 """
 
 

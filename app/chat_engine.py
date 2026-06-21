@@ -2,10 +2,10 @@ from __future__ import annotations
 
 from typing import Callable
 
+from app import tools
 from app.data_loader import load_all_data
 from app.llm_client import classify_intent_with_llm, llm_is_configured, render_answer_with_llm
 from app.models import ChatResponse, IntentResult, ToolResult
-from app import tools
 
 
 SUGGESTED_QUESTIONS = [

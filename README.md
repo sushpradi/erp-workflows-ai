@@ -10,6 +10,12 @@ The key idea is simple:
 - AI explains.
 - JSON is the source of truth.
 
+## How this maps to a real ERP
+
+This demo uses JSON files in `sample_data/` as a stand-in for ERP data.
+
+In a real Frappe or ERPNext deployment, the JSON-backed data loader would be replaced with Frappe table reads or API queries. The deterministic Python tool layer would stay responsible for calculations such as cash forecasting, budget checks, workflow bottleneck detection, vendor ranking, and profitability analysis. The LLM layer would continue to handle intent fallback and concise answer generation over those computed facts.
+
 ## What this includes
 
 - Streamlit chat UI with 10 suggested questions

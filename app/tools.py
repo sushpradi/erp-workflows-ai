@@ -120,9 +120,11 @@ def forecast_purchase_cash_outflow(data: dict[str, Any], today: date | None = No
     today = today or date.today()
     windows = {"7_days": 0, "30_days": 0, "45_days": 0}
     upcoming = []
+    active_payment_request_ids = set()
     for item in data["payments"]:
         if item["payment_status"] in {"PAID", "CANCELLED"}:
             continue
+        active_payment_request_ids.add(item["request_id"])
         due = _parse_date(item["due_date"])
         delta = (due - today).days
         amount = item["payment_amount"]
@@ -133,17 +135,22 @@ def forecast_purchase_cash_outflow(data: dict[str, Any], today: date | None = No
         if delta <= 45:
             windows["45_days"] += amount
         upcoming.append(item)
-    pending_commitments = sum(
-        item["amount"]
+    pending_workflows_without_payment = [
+        item
         for item in data["workflows"]
         if item["status"] in {"WAITING_FOR_APPROVAL", "BLOCKED", "PENDING_PO"}
-    )
+        and item["request_id"] not in active_payment_request_ids
+    ]
+    pending_commitments = sum(item["amount"] for item in pending_workflows_without_payment)
     largest_payment = max(upcoming, key=lambda item: item["payment_amount"], default=None)
     return {
         "windows": windows,
+        "payment_outflow_total": windows["45_days"],
         "pending_commitments": pending_commitments,
         "expected_total_outflow": windows["45_days"] + pending_commitments,
         "largest_upcoming_payment": largest_payment,
+        "pending_workflows_without_payment": pending_workflows_without_payment,
+        "excluded_request_ids_with_existing_payments": sorted(active_payment_request_ids),
     }
 
 

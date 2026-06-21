@@ -47,3 +47,13 @@ def test_savings_include_subscriptions_and_discretionary_requests() -> None:
     savings = tools.get_savings_opportunities(data)
     assert savings["unused_subscriptions"]
     assert any(item["is_discretionary"] for item in savings["discretionary_purchases"])
+
+
+def test_cash_outflow_excludes_payment_backed_workflows_from_pending_commitments() -> None:
+    data = reload_all_data()
+    forecast = tools.forecast_purchase_cash_outflow(data)
+    assert forecast["payment_outflow_total"] == 2443600
+    assert forecast["pending_commitments"] == 1190000
+    assert forecast["expected_total_outflow"] == 3633600
+    assert "PR-1001" in forecast["excluded_request_ids_with_existing_payments"]
+    assert "PR-1006" in forecast["excluded_request_ids_with_existing_payments"]

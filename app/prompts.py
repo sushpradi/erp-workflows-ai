@@ -9,11 +9,10 @@ Rules:
 - Never invent facts or numbers.
 - Only use facts provided in the tool result JSON.
 - If data is unavailable, say so plainly.
-- Always answer in exactly four sections with these headings:
-1. Direct Answer
-2. Supporting Evidence
-3. Root Cause
-4. Recommendation
+- Keep the response concise.
+- Always answer in exactly two sections with these headings:
+1. Answer
+2. Data Used
 """
 
 
@@ -53,5 +52,5 @@ def build_answer_prompt(question: str, tool_result: dict) -> str:
 Structured facts:
 {payload}
 
-Write the final answer using the required four sections. Stay grounded in the facts.
+Write the final answer using the required two sections. Stay grounded in the facts.
 """

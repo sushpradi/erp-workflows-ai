@@ -125,34 +125,39 @@ def render_rule_based_answer(question: str, tool_result: ToolResult) -> str:
     intent = tool_result.intent
     if intent == "stuck_workflows":
         items = facts["stuck_workflows"]
-        direct = f"{len(items)} workflows are stuck for more than 3 days."
-        evidence = "\n".join(
+        answer = f"{len(items)} workflows are stuck for more than 3 days."
+        data_used = "\n".join(
             f"- {item['workflow_id']} with {item['current_owner']} at {item['current_stage']} for {item['days_stuck']} days"
             for item in items[:5]
         )
-        root = "Approval gaps and overdue payment dependencies are the main blockers."
-        recommendation = "Escalate the oldest blocked items first and clear missing approvals before new requests are queued."
     elif intent == "budget_overrun":
         over = facts["over_budget_departments"]
-        direct = f"{len(over)} departments are projected to exceed budget this quarter."
-        evidence = "\n".join(
+        answer = f"{len(over)} departments are projected to exceed budget this quarter."
+        data_used = "\n".join(
             f"- {item['department']}: budget {_format_currency(item['budget'])}, projected {_format_currency(item['projected_spend'])}, variance {_format_currency(item['variance'])}"
             for item in over
         )
-        root = "Pending commitments are pushing projected spend above department caps."
-        recommendation = "Pause discretionary requests in overrun departments and route further spend for finance review."
+    elif intent == "cash_outflow":
+        answer = f"Expected purchase cash outflow in the next 45 days is {_format_currency(facts['expected_total_outflow'])}."
+        data_used = "\n".join(
+            [
+                f"- Payment outflow total: {_format_currency(facts['payment_outflow_total'])}",
+                f"- Pending commitments without payment records: {_format_currency(facts['pending_commitments'])}",
+                f"- Next 7 days: {_format_currency(facts['windows']['7_days'])}",
+                f"- Next 30 days: {_format_currency(facts['windows']['30_days'])}",
+                f"- Next 45 days: {_format_currency(facts['windows']['45_days'])}",
+            ]
+        )
     elif intent == "vendor_risk":
         rows = facts["vendor_performance"]
-        direct = f"{rows[0]['vendor']} is the highest-risk vendor right now."
-        evidence = "\n".join(
+        answer = f"{rows[0]['vendor']} is the highest-risk vendor right now."
+        data_used = "\n".join(
             f"- {item['vendor']}: delay {item['avg_delivery_delay_days']} days, exception rate {item['invoice_exception_rate_percent']}%, risk score {item['risk_score']}"
             for item in rows[:4]
         )
-        root = "The highest-risk vendors combine long delivery delays with frequent invoice exceptions."
-        recommendation = "Review SLA performance with the top two vendors and shift non-critical orders where alternatives exist."
     elif intent == "profitability":
-        direct = f"Profit declined by {_format_currency(abs(facts['profit_delta']))} versus the previous quarter."
-        evidence = "\n".join(
+        answer = f"Profit declined by {_format_currency(abs(facts['profit_delta']))} versus the previous quarter."
+        data_used = "\n".join(
             [
                 f"- Revenue change: {_format_currency(facts['revenue_change'])}",
                 f"- Payroll change: {_format_currency(facts['payroll_change'])}",
@@ -160,34 +165,24 @@ def render_rule_based_answer(question: str, tool_result: ToolResult) -> str:
                 f"- Receivables change: {_format_currency(facts['receivables_change'])}",
             ]
         )
-        root = "Lower revenue, higher payroll, and higher purchase spend are reducing profitability while receivables remain elevated."
-        recommendation = "Tighten discretionary purchasing, accelerate collections, and review payroll growth against revenue trends."
     elif intent == "savings":
-        direct = f"Identified {_format_currency(facts['estimated_savings'])} in potential savings without major operational impact."
-        evidence = "\n".join(
+        answer = f"Identified {_format_currency(facts['estimated_savings'])} in potential savings without major operational impact."
+        data_used = "\n".join(
             [f"- Discretionary pending purchases: {len(facts['discretionary_purchases'])} items"]
             + [
                 f"- Unused {item['product']} licenses: {item['unused_licenses']} for {_format_currency(item['estimated_savings'])}"
                 for item in facts["unused_subscriptions"]
             ]
         )
-        root = "Savings are concentrated in discretionary purchase requests and underused software licenses."
-        recommendation = "Delay discretionary approvals, reduce unused subscriptions, and renegotiate terms with high-risk vendors."
     else:
-        direct = f"The question '{question}' has been answered using deterministic workflow data."
-        evidence = f"- Tools used: {', '.join(tool_result.tools_used)}"
-        root = "The answer is based on JSON-backed calculations from the workflow intelligence layer."
-        recommendation = "Review the tool output for item-level detail and act on the highest-impact findings first."
+        answer = f"The question '{question}' was answered using deterministic workflow data."
+        data_used = f"- Tools used: {', '.join(tool_result.tools_used)}"
     return "\n\n".join(
         [
-            "Direct Answer",
-            direct,
-            "Supporting Evidence",
-            evidence or "- No supporting evidence available.",
-            "Root Cause",
-            root,
-            "Recommendation",
-            recommendation,
+            "Answer",
+            answer,
+            "Data Used",
+            data_used or "- No supporting data available.",
         ]
     )
 

@@ -14,20 +14,34 @@ DEFAULT_BASE_URL = "https://api.groq.com/openai/v1"
 DEFAULT_MODEL = "llama-3.3-70b-versatile"
 
 
+def _streamlit_secret(name: str) -> str | None:
+    try:
+        import streamlit as st
+
+        value = st.secrets.get(name)
+        return str(value) if value else None
+    except Exception:
+        return None
+
+
+def _config_value(name: str, default: str | None = None) -> str | None:
+    return os.getenv(name) or _streamlit_secret(name) or default
+
+
 def llm_is_configured() -> bool:
-    return bool(os.getenv("LLM_API_KEY"))
+    return bool(_config_value("LLM_API_KEY"))
 
 
 def _get_client() -> OpenAI:
     return OpenAI(
-        api_key=os.environ["LLM_API_KEY"],
-        base_url=os.getenv("LLM_BASE_URL", DEFAULT_BASE_URL),
+        api_key=_config_value("LLM_API_KEY"),
+        base_url=_config_value("LLM_BASE_URL", DEFAULT_BASE_URL),
     )
 
 
 def _chat_json(prompt: str) -> dict[str, Any]:
     response = _get_client().chat.completions.create(
-        model=os.getenv("LLM_MODEL", DEFAULT_MODEL),
+        model=_config_value("LLM_MODEL", DEFAULT_MODEL),
         temperature=0,
         response_format={"type": "json_object"},
         messages=[
@@ -54,7 +68,7 @@ def classify_intent_with_llm(question: str) -> IntentResult:
 
 def render_answer_with_llm(question: str, tool_result: dict[str, Any]) -> str:
     response = _get_client().chat.completions.create(
-        model=os.getenv("LLM_MODEL", DEFAULT_MODEL),
+        model=_config_value("LLM_MODEL", DEFAULT_MODEL),
         temperature=0,
         messages=[
             {"role": "system", "content": SYSTEM_PROMPT},
